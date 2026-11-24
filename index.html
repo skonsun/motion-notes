@@ -1,0 +1,1080 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="16 种前端交互动效的中文速查笔记，含可交互演示、落地原则和可复制的 AI 动效指令。">
+  <meta name="theme-color" content="#0b0e1b">
+  <title>前端交互动效笔记 · 16 种常见高级动效</title>
+  <style>:root {
+  color-scheme: light;
+  --ink: #111525;
+  --muted: #535e72;
+  --line: #dfe4ee;
+  --paper: #f6f8fc;
+  --blue: #2854dc;
+  --night: #0b0e1b;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --sans: Inter, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 28px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.65 var(--sans); }
+h1, h2, h3, p, figure, dl, dd, blockquote { margin: 0; }
+button, input { font: inherit; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid #477bff; outline-offset: 4px; }
+.sr-only, .skip:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip:focus { position: fixed; top: 12px; left: 12px; z-index: 4; background: white; color: var(--blue); padding: 8px 14px; border-radius: 8px; }
+
+.wrap { width: min(1200px, calc(100% - 96px)); margin-inline: auto; }
+.intro {
+  color: #f5f7ff;
+  background:
+    radial-gradient(ellipse at 78% 65%, #182656 0%, transparent 48%),
+    radial-gradient(ellipse at 94% 12%, #141830 0%, transparent 55%),
+    var(--night);
+  overflow: hidden;
+}
+.topbar { border-bottom: 1px solid #ffffff13; }
+.topbar-inner, .footer-inner { min-height: 69px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 760; white-space: nowrap; }
+.brand-symbol {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  padding-bottom: 8px;
+  background: #315df0;
+  box-shadow: inset 0 1px #ffffff40;
+}
+.brand-symbol i { width: 3px; height: 6px; border-radius: 2px; background: #f1f5ff; transform: skewX(-13deg); }
+.brand-symbol i:nth-child(2) { height: 10px; }
+.brand-symbol i:nth-child(3) { height: 14px; }
+.topbar nav { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(14px, 3vw, 39px); }
+.topbar nav a { color: #c0c8dc; font-size: .9rem; white-space: nowrap; }
+.topbar nav a:hover { color: #fff; }
+.hero { min-height: 483px; position: relative; display: grid; grid-template-columns: 46% 54%; align-items: center; }
+.hero-copy { padding: 60px 0 66px; position: relative; z-index: 1; }
+.eyebrow { display: flex; align-items: center; gap: 10px; color: #a3bbff; font-size: .875rem; font-weight: 700; letter-spacing: .13em; }
+.eyebrow span { width: 19px; height: 2px; border-radius: 5px; background: #729aff; }
+.hero h1 { margin: 17px 0 20px; font-size: clamp(3.25rem, 5.7vw, 5.4rem); letter-spacing: -.067em; line-height: 1.09; font-weight: 850; }
+.hero h1 em { color: #88a7ff; font-style: normal; background: linear-gradient(100deg, #6997ff 8%, #b0b4ff 91%); background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-description { color: #c0c9df; max-width: 405px; line-height: 1.85; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+.button { display: inline-flex; justify-content: center; align-items: center; border: 1px solid transparent; min-height: 44px; padding: 8px 16px; border-radius: 8px; font-size: .875rem; font-weight: 720; }
+.button-primary { background: #4972ff; color: #07112e; box-shadow: 0 5px 24px #335dff38; }
+.button-primary:hover { background: #7695ff; }
+.button-ghost { color: #edf2ff; background: #ffffff06; border-color: #ffffff29; }
+.button-ghost:hover { background: #ffffff14; border-color: #ffffff50; }
+.hero-art { position: relative; min-width: 0; width: 108%; margin-left: -3%; align-self: center; }
+.hero-art canvas { display: block; width: 100%; height: auto; }
+.hero-art figcaption { position: absolute; bottom: 9%; right: 7%; display: grid; gap: 2px; padding: 9px 14px; border: 1px solid #939fda39; border-radius: 8px; background: #111831dc; color: #a9b9f2; font: .6875rem/1.45 var(--mono); }
+.hero-art figcaption span { font: 700 .875rem/1.5 var(--sans); color: #e8edff; }
+
+.section { padding-top: 68px; padding-bottom: 73px; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+.section-heading h2 { font-size: clamp(1.8rem, 3.3vw, 2.65rem); letter-spacing: -.045em; line-height: 1.2; font-weight: 820; }
+.section-heading h2 span { display: inline-block; color: var(--blue); font: 700 .75rem/1.2 var(--mono); letter-spacing: 0; border: 1px solid #cfdafe; background: #e9efff; padding: 5px 7px; border-radius: 6px; vertical-align: middle; transform: translateY(-3px); margin-left: 4px; }
+.section-heading p { color: var(--muted); margin-top: 9px; }
+.search { flex: 0 1 276px; position: relative; display: flex; align-items: center; color: #5d6980; min-width: 220px; }
+.search input { width: 100%; height: 44px; padding: 0 38px 0 35px; border: 1px solid #d5ddea; border-radius: 8px; color: var(--ink); background: #fff; font-size: .875rem; }
+.search input::placeholder { color: #657188; }
+.search input:focus + kbd { visibility: hidden; }
+.search-icon { position: absolute; width: 12px; height: 12px; left: 13px; border: 1.6px solid currentColor; border-radius: 50%; pointer-events: none; }
+.search-icon::after { content: ""; position: absolute; inset: 8px auto auto 8px; width: 6px; height: 1.6px; background: currentColor; transform: rotate(45deg); transform-origin: left; }
+.search kbd { position: absolute; right: 12px; width: 20px; padding: 2px 0; text-align: center; border: 1px solid #e1e6f1; border-radius: 4px; font: .75rem/1.1 var(--mono); background: #f7f9fd; pointer-events: none; }
+.filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.filters { display: flex; flex-wrap: wrap; gap: 7px; }
+.filters button { border: 1px solid #dce3ef; border-radius: 7px; min-height: 35px; padding: 5px 12px; color: #4a5770; background: #fff; font-size: .875rem; font-weight: 650; }
+.filters button:hover { border-color: #a7bee9; color: #214ac3; }
+.filters button[aria-pressed="true"] { border-color: #cbd9ff; background: #e8efff; color: #2046b8; }
+.result-count { color: var(--muted); font-size: .875rem; white-space: nowrap; }
+.effect-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+.effect-card { display: flex; flex-direction: column; min-width: 0; padding: 8px; border: 1px solid #dfe5ef; background: #fff; border-radius: 14px; box-shadow: 0 2px 6px #18244006; }
+.effect-card:focus-within, .effect-card:hover { border-color: #b2c4ed; }
+.effect-copy { flex: 1; display: flex; flex-direction: column; padding: 15px 11px 7px; }
+.effect-meta { display: flex; align-items: center; gap: 8px; color: #4f5b73; font-size: .8125rem; font-weight: 650; line-height: 1.3; }
+.effect-meta span:first-child { color: #274dc0; font: 700 .75rem/1.25 var(--mono); background: #eaf0ff; border-radius: 4px; padding: 3px 5px; }
+.effect-copy h3 { margin-top: 9px; margin-bottom: 7px; font-size: 1.23rem; font-weight: 820; letter-spacing: -.025em; line-height: 1.35; }
+.effect-copy h3 span { color: #515e76; margin-left: 8px; display: inline-block; font-size: .875rem; font-weight: 600; letter-spacing: 0; }
+.effect-copy p { color: #455168; }
+.effect-copy .use-case { margin-top: auto; padding-top: 11px; padding-bottom: 4px; font-size: .875rem; }
+.use-case strong { display: inline-block; color: #31456d; margin-right: 7px; font-weight: 760; }
+.empty { padding: 38px 10px; text-align: center; color: var(--muted); border: 1px dashed #aab9d7; border-radius: 12px; }
+.empty button { margin-top: 10px; color: var(--blue); background: #e9efff; }
+
+.demo {
+  --accent: #8faaff;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  width: 100%;
+  height: 147px;
+  border: 0;
+  padding: 0;
+  border-radius: 8px;
+  color: #eaf1ff;
+  background: radial-gradient(ellipse at 53% 80%, #273963, #111a33 72%);
+}
+.demo::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(circle, #aec2ff50 .85px, transparent 1px) center / 12px 12px;
+  mask-image: radial-gradient(ellipse at center, #000 0, transparent 78%);
+}
+.demo:focus-visible { outline-offset: 2px; }
+.demo-visual { display: grid; place-items: center; width: 100%; height: 100%; pointer-events: none; }
+.demo-hint {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #e0e8fa;
+  background: #0b1126d9;
+  border: 1px solid #d8e4ff29;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: .75rem;
+  line-height: 1.45;
+}
+.demo-hint i { width: 0; height: 0; border-left: 5px solid #adbcde; border-top: 3px solid transparent; border-bottom: 3px solid transparent; }
+.demo-spotlight {
+  background:
+    radial-gradient(circle 110px at var(--px, 50%) var(--py, 49%), #4a72edb0, transparent 100%),
+    radial-gradient(ellipse at 50% 70%, #203260, #111832 76%);
+}
+.spot-card, .lift-card { display: grid; gap: 6px; width: 123px; padding: 12px; border-radius: 8px; background: linear-gradient(142deg, #9cb9ff42, #0e1b4135); border: 1px solid #a6beff7d; box-shadow: 0 0 24px #698eff28; }
+.spot-card i, .lift-card i, .tilt-card i { display: block; width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(145deg, #cfdbff, #758dff); box-shadow: 0 0 14px #809fff80; }
+.spot-card b, .lift-card b { display: block; height: 3px; width: 56%; border-radius: 5px; background: #d8e4ffbb; }
+.spot-card b:last-child, .lift-card b:last-child { width: 77%; opacity: .48; }
+.demo-spotlight.is-playing .spot-card { animation: spot 800ms ease both; }
+@keyframes spot { 45% { box-shadow: 0 0 48px 10px #7199ffb8; border-color: white; } }
+.demo-reveal { background: radial-gradient(ellipse at 50% 76%, #342768, #19152f 76%); --accent: #b79cff; }
+.reveal-bars { margin-top: -8px; display: grid; gap: 6px; width: 124px; }
+.reveal-bars i { display: block; height: 15px; border: 1px solid #b49cfa72; background: linear-gradient(90deg, #ad88fa78, #7158bc34); border-radius: 4px; }
+.reveal-bars i:nth-child(2) { width: 84%; opacity: .78; }
+.reveal-bars i:nth-child(3) { width: 68%; opacity: .5; }
+.is-playing .reveal-bars i { animation: reveal 560ms cubic-bezier(.22,1,.36,1) both; }
+.is-playing .reveal-bars i:nth-child(2) { animation-delay: 120ms; }
+.is-playing .reveal-bars i:nth-child(3) { animation-delay: 240ms; }
+@keyframes reveal { from { transform: translateY(22px); opacity: 0; } }
+.demo-beam { background: radial-gradient(ellipse at 50% 82%, #1e325f, #11182e 76%); }
+.beam-card { display: grid; place-items: center; isolation: isolate; position: relative; width: 135px; height: 71px; border-radius: 10px; overflow: hidden; background: #415e9e; box-shadow: 0 0 24px #376cff4a; }
+.beam-card::before { content: ""; z-index: -2; position: absolute; inset: -48%; background: conic-gradient(from 20deg, transparent 0turn .65turn, #386bff .8turn, #caeaff .87turn, transparent .93turn); }
+.beam-card::after { content: ""; position: absolute; z-index: -1; inset: 1.5px; border-radius: 8px; background: linear-gradient(155deg, #202e4e, #151e3a); }
+.beam-shape { width: 18px; height: 18px; border: 1.5px solid #9dbcff; rotate: 45deg; border-radius: 3px; box-shadow: 0 0 14px #86aeff80; }
+.is-playing .beam-card::before { animation: beam 950ms linear 2; }
+@keyframes beam { to { transform: rotate(360deg); } }
+.demo-magnetic { background: radial-gradient(ellipse at 51% 80%, #203663, #141c36 76%); }
+.magnetic-ring { width: 146px; height: 73px; display: grid; place-items: center; border: 1px dashed #96a9e470; border-radius: 48%; }
+.magnetic-button { padding: 6px 13px; border-radius: 6px; font-size: .875rem; background: #90a9ff; color: #132255; transform: translate(var(--dx, 0px), var(--dy, 0px)); transition: transform 160ms ease-out; }
+.is-playing .magnetic-button { animation: magnet 650ms ease both; }
+@keyframes magnet { 37% { transform: translate(15px,-10px); } }
+.demo-story { background: radial-gradient(ellipse at 50% 80%, #34326c, #1c1c3b 76%); }
+.story-frame { display: grid; place-items: center; text-align: center; gap: 4px; width: 125px; height: 73px; border: 1px solid #a8a7f47d; background: #4d46885c; border-radius: 9px; padding: 9px; }
+.story-chapter { display: flex; align-items: center; gap: 7px; }
+.story-label { font-size: .75rem; color: #edeaff; }
+.story-step { color: #d7d4ff; font: 700 1.65rem/1 var(--mono); }
+.story-dots { display: flex; gap: 5px; }
+.story-dots i { width: 5px; height: 5px; background: #8b84c6; border-radius: 50%; }
+.story-dots i.active, .demo-story:not([data-step]) .story-dots i:first-child { background: #e0dbff; }
+.is-playing .story-chapter { animation: reveal 300ms ease-out both; }
+.demo-tilt { background: radial-gradient(ellipse at 50% 82%, #233e69, #151b35 73%); }
+.tilt-card { display: grid; place-items: start; align-content: space-between; width: 111px; height: 69px; padding: 11px; border-radius: 8px; border: 1px solid #a1c4ff9c; background: linear-gradient(130deg, #445b94, #26375f 53%, #625b9a); box-shadow: 7px 10px 20px #0b1128b0; transform: perspective(240px) rotateX(var(--rx, 13deg)) rotateY(var(--ry, -15deg)); transition: transform 170ms ease-out; }
+.tilt-card b { width: 57%; height: 4px; background: #c7d6ff9e; border-radius: 3px; }
+.is-playing .tilt-card { animation: tilt 750ms ease both; }
+@keyframes tilt { 40% { transform: perspective(240px) rotateX(-17deg) rotateY(21deg) scale(1.07); } }
+.demo-scramble, .demo-typing { background: radial-gradient(ellipse at 52% 75%, #233f51, #121d30 77%); }
+.terminal { display: inline-flex; align-items: center; gap: 5px; padding: 9px 13px; border-radius: 6px; background: #111d2d; border: 1px solid #4c8b82; color: #aef0d7; font: 700 1.05rem/1.2 var(--mono); }
+.terminal::before { content: "›"; color: #77c9ab; }
+.caret { width: 7px; height: 1.05em; background: #aef0d7; }
+.is-playing .caret { animation: blink 650ms step-end 3; }
+@keyframes blink { 50% { opacity: 0; } }
+.demo-shine { background: radial-gradient(ellipse at 55% 81%, #2c365e, #151c30 79%); }
+.shine-plate { position: relative; overflow: hidden; padding: 9px 15px; border: 1px solid #b3c9ee99; border-radius: 7px; background: linear-gradient(140deg, #cbdaf2, #7188ad 54%, #a3b7d8); color: #142746; font: 700 .84rem/1.4 var(--mono); }
+.shine-plate::before { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, #fff 50%, transparent 65%); transform: translateX(-100%); }
+.is-playing .shine-plate::before { animation: shine 780ms ease both; }
+@keyframes shine { to { transform: translateX(100%); } }
+.demo-parallax { background: radial-gradient(ellipse at 52% 79%, #39446e, #1b2341 76%); }
+.landscape { position: relative; isolation: isolate; overflow: hidden; display: block; width: 145px; height: 77px; border: 1px solid #a1aaf28c; border-radius: 8px; background: linear-gradient(165deg, #3b4a78, #6b6097); }
+.moon, .hill { position: absolute; display: block; transition: transform 520ms cubic-bezier(.22,1,.36,1); }
+.moon { top: 14px; right: 35px; width: 22px; aspect-ratio: 1; border-radius: 50%; background: #eee1ff; transform: translateY(calc(-1px * var(--depth, 0))); }
+.hill { width: 100px; height: 72px; bottom: -48px; border-radius: 15px; }
+.hill.far { left: 31px; background: #8990cd; transform: translateY(calc(-4px * var(--depth, 0))) rotate(26deg); }
+.hill.near { left: -4px; background: #30497f; bottom: -39px; transform: translateY(calc(-8px * var(--depth, 0))) rotate(32deg); }
+.demo-count { background: radial-gradient(ellipse at 52% 79%, #203f55, #14202f 77%); }
+.counter { color: #a7eaf1; font: 750 2.2rem/1 var(--mono); font-variant-numeric: tabular-nums; text-shadow: 0 0 22px #77d1e780; }
+.demo-lift { background: radial-gradient(ellipse at 52% 78%, #374172, #201f40 78%); }
+.lift-card { border-color: #a9b6fd7a; transition: transform 180ms ease-out, box-shadow 180ms ease-out; }
+.demo-lift:hover .lift-card, .demo-lift:focus-visible .lift-card { transform: translateY(-7px); box-shadow: 0 15px 24px #080e25b5; }
+.is-playing .lift-card { animation: lift 700ms ease both; }
+@keyframes lift { 40%, 64% { transform: translateY(-12px); box-shadow: 0 17px 28px #080e25c0; } }
+.demo-stagger { background: radial-gradient(ellipse at 52% 78%, #33296e, #1b1734 77%); }
+.stagger-bars { display: flex; align-items: end; gap: 6px; height: 52px; }
+.stagger-bars i { width: 16px; height: 66%; border: 1px solid #c3b4fa75; border-radius: 4px; background: linear-gradient(160deg, #ad9bf7, #6c59b1); }
+.stagger-bars i:nth-child(2) { height: 83%; --delay: 50ms; }
+.stagger-bars i:nth-child(3) { height: 100%; --delay: 100ms; }
+.stagger-bars i:nth-child(4) { height: 75%; --delay: 150ms; }
+.stagger-bars i:nth-child(5) { height: 54%; --delay: 200ms; }
+.is-playing .stagger-bars i { animation: reveal 520ms cubic-bezier(.22,1,.36,1) var(--delay, 0ms) both; }
+.demo-marquee { background: radial-gradient(ellipse at 52% 80%, #2a4462, #152034 76%); }
+.marquee-window { width: 82%; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 13% 87%, transparent); }
+.marquee-track { display: flex; width: max-content; animation: marquee 8s linear infinite paused; }
+.marquee-track > span { display: flex; gap: 8px; padding-right: 8px; }
+.marquee-track b { padding: 6px 10px; border: 1px solid #96c6e775; border-radius: 5px; background: #517ca748; color: #d2e9ff; font: 700 .8rem/1.25 var(--mono); }
+.demo-marquee[aria-pressed="true"] .marquee-track { animation-play-state: running; }
+.demo-marquee[aria-pressed="true"] .demo-hint i { width: 5px; height: 7px; border: 0; border-inline: 1px solid #c8d2eb; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.demo-spring { background: radial-gradient(ellipse at 52% 80%, #423761, #221b37 76%); }
+.demo-ease { background: radial-gradient(ellipse at 52% 80%, #263c73, #171d3c 76%); }
+.spring-track, .ease-track { display: block; width: 135px; height: 9px; background: #9baaf750; border-radius: 6px; position: relative; }
+.spring-track { background: #b993d65c; }
+.spring-knob, .ease-knob { display: block; position: absolute; left: 0; top: 50%; width: 22px; height: 22px; margin-top: -11px; border: 1px solid #dce4ff; border-radius: 50%; background: #a7b5ff; box-shadow: 0 0 14px #91a7ff85; }
+.spring-knob { background: #dfabf4; box-shadow: 0 0 14px #e290ff80; }
+.is-playing .spring-knob, .demo-spring.has-played .spring-knob { transform: translateX(113px); }
+.is-playing .spring-knob { animation: spring 820ms linear both; }
+.is-playing .ease-knob, .demo-ease.has-played .ease-knob { transform: translateX(113px); }
+.is-playing .ease-knob { animation: ease 820ms cubic-bezier(.22,1,.36,1) both; }
+@keyframes spring { 0% { transform: translateX(0); animation-timing-function: ease-out; } 49% { transform: translateX(128px); } 72% { transform: translateX(107px); } 89% { transform: translateX(116px); } 100% { transform: translateX(113px); } }
+@keyframes ease { from { transform: translateX(0); } to { transform: translateX(113px); } }
+
+.principles { background: #ebf0fa; border-block: 1px solid #dce5f5; }
+.principle-grid, .reference-grid, .prompt-grid { display: grid; gap: 16px; }
+.principle-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.principle, .reference-grid article { background: #fff; border: 1px solid #dce4f1; padding: 21px; border-radius: 12px; }
+.principle h3, .reference-grid h3 { margin: 9px 0 6px; font-size: 1.18rem; }
+.principle p, .reference-grid p, .tools dd { color: #4b576d; }
+.principle p + p { margin-top: 8px; }
+.principle code { color: #2b4da7; padding: 1px 3px; font: .94em/1.5 var(--mono); background: #edf2ff; border-radius: 4px; overflow-wrap: anywhere; }
+.principle-icon { display: grid; place-items: center; width: 37px; height: 37px; border-radius: 8px; background: #e9efff; color: #2a50c3; position: relative; }
+.principle-icon::before, .principle-icon::after { content: ""; display: block; }
+.timing::before { width: 17px; height: 17px; border: 1.6px solid; border-radius: 50%; }
+.timing::after { position: absolute; height: 6px; width: 5px; border-left: 1.6px solid; border-bottom: 1.6px solid; left: 18px; top: 13px; }
+.performance::before { width: 17px; height: 14px; background: linear-gradient(to right, currentColor 28%, transparent 28% 36%, currentColor 36% 64%, transparent 64% 72%, currentColor 72%); clip-path: polygon(0 65%, 33% 65%, 33% 36%, 67% 36%, 67% 0, 100% 0, 100% 100%, 0 100%); }
+.accessibility::before { width: 16px; height: 18px; border: 1.6px solid; border-radius: 4px 4px 9px 9px; }
+.accessibility::after { position: absolute; width: 8px; height: 5px; border-left: 1.6px solid; border-bottom: 1.6px solid; transform: rotate(-45deg) translateY(-1px); }
+.prompts { background: #101527; color: #f4f7ff; }
+.prompts .section-heading p { color: #bcc7de; }
+.prompt-grid, .reference-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.prompt-card { border: 1px solid #303b58; border-radius: 11px; padding: 16px 17px 17px; background: #181f35; }
+.prompt-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.prompt-head h3 { display: flex; align-items: center; gap: 9px; font-size: 1rem; }
+.prompt-head h3 span { color: #b6c9ff; font: 700 .75rem/1.4 var(--mono); padding: 3px 5px; background: #263762; border-radius: 4px; }
+.prompt-text { color: #d1d9ea; }
+.copy-button { display: flex; flex-shrink: 0; align-items: center; gap: 6px; padding: 5px 8px; border: 1px solid #49587d; border-radius: 5px; color: #e1eaff; background: #232e4b; font-size: .8125rem; }
+.copy-button:hover { background: #354875; }
+.copy-button[data-copied] { color: #b9f1d4; border-color: #598577; }
+.copy-button i { width: 9px; height: 10px; border: 1px solid currentColor; border-radius: 2px; position: relative; margin-left: 2px; }
+.copy-button i::before { content: ""; width: 7px; height: 8px; border-top: 1px solid; border-left: 1px solid; border-radius: 2px 0 0 0; position: absolute; top: -3px; left: -3px; }
+.reference-grid article { padding-top: 13px; }
+.tools > div { padding: 8px 0; }
+.tools > div + div { border-top: 1px solid #e3e9f3; }
+.tools dt { font-weight: 750; color: #22325a; }
+.swatches { display: flex; gap: 15px; flex-wrap: wrap; list-style: none; padding: 0; }
+.swatches li { display: grid; gap: 5px; color: var(--muted); font-size: .875rem; }
+.swatch { display: block; width: 56px; height: 37px; border-radius: 7px; border: 1px solid #d0d8ea; }
+.swatch.ink { background: var(--night); }
+.swatch.white { background: white; }
+.swatch.blue { background: #4972ff; }
+blockquote { margin-top: 16px; padding: 14px 16px; border-left: 3px solid #5a7fff; color: #273c72; background: #eaf0ff; border-radius: 0 7px 7px 0; }
+.footer { color: #e9eeff; background: var(--night); }
+.footer .brand-symbol { width: 26px; height: 26px; padding-bottom: 6px; }
+.footer .back { color: #c0c8dd; font-size: .875rem; }
+.footer .back:hover { color: white; }
+
+@media (max-width: 1000px) {
+  .wrap { width: calc(100% - 64px); }
+  .hero { min-height: 420px; }
+  .effect-copy h3 span { display: block; margin: 2px 0 0; }
+}
+@media (max-width: 800px) {
+  .effect-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section { padding-block: 52px; }
+  .principle-grid { grid-template-columns: 1fr; }
+  .hero-art { width: 117%; }
+}
+@media (max-width: 625px) {
+  .wrap { width: calc(100% - 36px); }
+  .topbar-inner { display: grid; justify-content: normal; gap: 12px; padding-block: 12px 11px; }
+  .topbar nav { gap: 10px 19px; }
+  .hero { display: block; }
+  .hero-copy { padding: 37px 0 0; }
+  .hero h1 { font-size: clamp(2.87rem, 10vw, 4.4rem); }
+  .hero-art { width: 100%; margin: -2px 0 0; max-width: 465px; }
+  .hero-art figcaption { right: 2%; bottom: 11%; font-size: .625rem; padding: 4px 6px; }
+  .hero-art figcaption span { font-size: .75rem; }
+  .section { padding-block: 40px; }
+  .section-heading { display: grid; gap: 15px; margin-bottom: 16px; }
+  .search { width: 100%; }
+  .filter-row { align-items: flex-start; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+  .filters { gap: 5px; }
+  .filters button { padding: 4px 8px; }
+  .effect-grid, .prompt-grid, .reference-grid { grid-template-columns: 1fr; }
+  .effect-copy h3 span { display: inline-block; margin-left: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0ms !important; animation-duration: 0ms !important; animation-iteration-count: 1 !important; }
+  .demo-lift:hover .lift-card, .demo-lift:focus-visible .lift-card { transform: none; }
+}
+.demo-marquee.hover-paused[aria-pressed="true"] .marquee-track { animation-play-state: paused; }
+</style>
+</head>
+<body id="top">
+  <a class="skip" href="#effects">跳到动效速查</a>
+  <div class="intro">
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <a class="brand" href="#top"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span>动效笔记</a>
+        <nav aria-label="页面目录">
+          <a href="#effects">动效速查</a>
+          <a href="#principles">落地原则</a>
+          <a href="#prompts">AI 指令</a>
+          <a href="#references">工具参考</a>
+        </nav>
+      </div>
+    </header>
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span>前端交互动效笔记</p>
+        <h1 id="page-title">16 种常见<br><em>高级动效</em></h1>
+        <p class="hero-description">从鼠标聚光灯到缓出动画，查阅适用场景、试玩动效，再复制 AI 指令用到你的项目。</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#effects">浏览 16 种动效</a>
+          <a class="button button-ghost" href="#prompts">查看 AI 指令</a>
+        </div>
+      </div>
+      <figure class="hero-art">
+        <canvas id="curve" width="680" height="430" aria-hidden="true"></canvas>
+        <figcaption><span>Ease Out</span><code>cubic-bezier(0.22, 1, 0.36, 1)</code></figcaption>
+      </figure>
+    </section>
+  </div>
+
+  <main>
+    <section id="effects" class="wrap section effects" aria-labelledby="effects-title">
+      <div class="section-heading">
+        <div>
+          <h2 id="effects-title">动效速查 <span>16</span></h2>
+          <p>查看效果说明与典型场景，点击演示区域即可试玩。</p>
+        </div>
+        <label class="search" for="effect-search">
+          <span class="search-icon" aria-hidden="true"></span><span class="sr-only">搜索动效</span>
+          <input id="effect-search" type="search" placeholder="搜索动效或场景…" autocomplete="off">
+          <kbd aria-hidden="true">/</kbd>
+        </label>
+      </div>
+      <div class="filter-row">
+        <div class="filters" role="group" aria-label="按类别筛选动效">
+          <button type="button" data-filter="all" aria-pressed="true">全部</button>
+          <button type="button" data-filter="pointer" aria-pressed="false">鼠标交互</button>
+          <button type="button" data-filter="scroll" aria-pressed="false">滚动体验</button>
+          <button type="button" data-filter="feedback" aria-pressed="false">呈现与反馈</button>
+        </div>
+        <p class="result-count" id="result-count" role="status">16 项动效</p>
+      </div>
+      <div class="effect-grid" id="effect-grid">
+        <article class="effect-card" id="spotlight" data-category="pointer">
+          <button class="demo demo-spotlight" type="button" data-demo="spotlight" aria-label="演示鼠标聚光灯">
+            <span class="demo-visual" aria-hidden="true"><span class="spot-card"><i></i><b></b><b></b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>悬停或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>01</span><span>鼠标交互</span></div>
+            <h3>Spotlight<span>鼠标聚光灯</span></h3>
+            <p>光晕跟随鼠标移动，鼠标所在区域呈现聚光照明效果。</p>
+            <p class="use-case"><strong>典型场景</strong>产品卡片、功能展示卡片、官网介绍区域。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="reveal" data-category="scroll">
+          <button class="demo demo-reveal" type="button" data-demo="reveal" aria-label="演示滚动显示">
+            <span class="demo-visual" aria-hidden="true"><span class="reveal-bars"><i></i><i></i><i></i></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>滚动或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>02</span><span>滚动体验</span></div>
+            <h3>Scroll Reveal<span>滚动显示</span></h3>
+            <p>页面内容随着滚动进入视口，依次淡入、上移或滑入。</p>
+            <p class="use-case"><strong>典型场景</strong>长页面、品牌官网、产品介绍页面。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="beam" data-category="feedback">
+          <button class="demo demo-beam" type="button" data-demo="beam" aria-label="演示边缘流光">
+            <span class="demo-visual" aria-hidden="true"><span class="beam-card"><span class="beam-shape"></span></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>03</span><span>呈现与反馈</span></div>
+            <h3>Border Beam<span>边缘流光</span></h3>
+            <p>一道动态光线沿着卡片或容器边框循环流动。</p>
+            <p class="use-case"><strong>典型场景</strong>会员卡、推荐套餐、重点产品卡片。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="magnetic" data-category="pointer">
+          <button class="demo demo-magnetic" type="button" data-demo="magnetic" aria-label="演示磁吸按钮">
+            <span class="demo-visual" aria-hidden="true"><span class="magnetic-ring"><b class="magnetic-button">立即体验</b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>悬停或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>04</span><span>鼠标交互</span></div>
+            <h3>Magnetic Button<span>磁吸按钮</span></h3>
+            <p>鼠标靠近按钮时，按钮会向鼠标方向轻微移动，形成磁吸效果，离开后自动回位。</p>
+            <p class="use-case"><strong>典型场景</strong>首页核心按钮、注册按钮、立即体验按钮。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="story" data-category="scroll">
+          <button class="demo demo-story" type="button" data-demo="story" aria-label="演示滚动叙事">
+            <span class="demo-visual" aria-hidden="true"><span class="story-frame"><span class="story-chapter"><b class="story-step">01</b><span class="story-label">品牌起点</span></span><span class="story-dots"><i></i><i></i><i></i></span></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>滚动或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>05</span><span>滚动体验</span></div>
+            <h3>Scroll Storytelling<span>滚动叙事</span></h3>
+            <p>页面某个区域保持固定，用户滚动时，内部文字、图片或内容根据滚动进度逐步切换。</p>
+            <p class="use-case"><strong>典型场景</strong>品牌官网、产品介绍、企业发展历程。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="tilt" data-category="pointer">
+          <button class="demo demo-tilt" type="button" data-demo="tilt" aria-label="演示3D 倾斜">
+            <span class="demo-visual" aria-hidden="true"><span class="tilt-card"><i></i><b></b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>悬停或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>06</span><span>鼠标交互</span></div>
+            <h3>3D Tilt<span>3D 倾斜</span></h3>
+            <p>卡片根据鼠标位置产生轻微的三维旋转，模拟立体倾斜效果。</p>
+            <p class="use-case"><strong>典型场景</strong>作品集、会员卡、产品展示卡片。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="scramble" data-category="feedback">
+          <button class="demo demo-scramble" type="button" data-demo="scramble" aria-label="演示文字解码">
+            <span class="demo-visual" aria-hidden="true"><span class="terminal"><b class="scramble-text">DECODE</b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>07</span><span>呈现与反馈</span></div>
+            <h3>Text Scramble<span>文字解码</span></h3>
+            <p>文字先显示随机字符，随后逐渐解码，还原成目标文字。</p>
+            <p class="use-case"><strong>典型场景</strong>科技感标题、品牌宣传语、首页主视觉。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="shine" data-category="feedback">
+          <button class="demo demo-shine" type="button" data-demo="shine" aria-label="演示流光扫过">
+            <span class="demo-visual" aria-hidden="true"><span class="shine-plate">LIGHT SWEEP</span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>08</span><span>呈现与反馈</span></div>
+            <h3>Shine / Light Sweep<span>流光扫过</span></h3>
+            <p>高光或光带从元素表面快速扫过，形成金属质感或科技感。</p>
+            <p class="use-case"><strong>典型场景</strong>重点按钮、产品图片、文字标题、重点展示卡片。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="parallax" data-category="scroll">
+          <button class="demo demo-parallax" type="button" data-demo="parallax" aria-label="演示视差滚动">
+            <span class="demo-visual" aria-hidden="true"><span class="landscape"><i class="moon"></i><i class="hill far"></i><i class="hill near"></i></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>滚动或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>09</span><span>滚动体验</span></div>
+            <h3>Parallax Scrolling<span>视差滚动</span></h3>
+            <p>页面前景与背景以不同速度移动，形成空间层次感。</p>
+            <p class="use-case"><strong>典型场景</strong>大幅背景图、多层视觉画面、品牌官网首页。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="count" data-category="feedback">
+          <button class="demo demo-count" type="button" data-demo="count" aria-label="演示数字递增">
+            <span class="demo-visual" aria-hidden="true"><span class="counter">1,280</span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>10</span><span>呈现与反馈</span></div>
+            <h3>Count Up<span>数字递增</span></h3>
+            <p>数字从初始值逐步递增至目标数值。</p>
+            <p class="use-case"><strong>典型场景</strong>数据看板、企业业绩、客户数量、活动数据展示。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="lift" data-category="pointer">
+          <button class="demo demo-lift" type="button" data-demo="lift" aria-label="演示悬停上浮">
+            <span class="demo-visual" aria-hidden="true"><span class="lift-card"><i></i><b></b><b></b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>悬停或点击</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>11</span><span>鼠标交互</span></div>
+            <h3>Hover Lift<span>悬停上浮</span></h3>
+            <p>鼠标悬停在卡片上时，卡片轻微上浮，同时阴影加深，增强交互反馈。</p>
+            <p class="use-case"><strong>典型场景</strong>功能卡片、产品列表、服务介绍。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="typing" data-category="feedback">
+          <button class="demo demo-typing" type="button" data-demo="typing" aria-label="演示打字机效果">
+            <span class="demo-visual" aria-hidden="true"><span class="terminal"><b class="type-text">Hello, UI.</b><i class="caret"></i></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>12</span><span>呈现与反馈</span></div>
+            <h3>Typewriter Effect<span>打字机效果</span></h3>
+            <p>文本逐字符出现，并搭配闪烁的光标，模拟实时输入效果。</p>
+            <p class="use-case"><strong>典型场景</strong>AI 对话界面、科技感标题、终端模拟界面。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="stagger" data-category="feedback">
+          <button class="demo demo-stagger" type="button" data-demo="stagger" aria-label="演示错峰动画">
+            <span class="demo-visual" aria-hidden="true"><span class="stagger-bars"><i></i><i></i><i></i><i></i><i></i></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>13</span><span>呈现与反馈</span></div>
+            <h3>Stagger Animation<span>错峰动画</span></h3>
+            <p>多个元素按设定的时间间隔依次出现。例如每个元素间隔 0.05 秒。</p>
+            <p class="use-case"><strong>典型场景</strong>卡片列表、功能模块、产品展示网格。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="marquee" data-category="feedback">
+          <button class="demo demo-marquee" type="button" data-demo="marquee" aria-label="演示跑马灯" aria-pressed='false'>
+            <span class="demo-visual" aria-hidden="true"><span class="marquee-window"><span class="marquee-track"><span><b>MOTION</b><b>DESIGN</b><b>EXPLORE</b></span><span><b>MOTION</b><b>DESIGN</b><b>EXPLORE</b></span></span></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>播放 / 暂停</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>14</span><span>呈现与反馈</span></div>
+            <h3>Marquee<span>跑马灯</span></h3>
+            <p>图片或文字沿水平方向连续、无缝循环滚动，通常支持鼠标悬停暂停。</p>
+            <p class="use-case"><strong>典型场景</strong>品牌 Logo 墙、客户评价、合作伙伴展示。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="spring" data-category="feedback">
+          <button class="demo demo-spring" type="button" data-demo="spring" aria-label="演示弹性动画">
+            <span class="demo-visual" aria-hidden="true"><span class="spring-track"><b class="spring-knob"></b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>15</span><span>呈现与反馈</span></div>
+            <h3>Spring Animation<span>弹性动画</span></h3>
+            <p>元素运动到目标位置后轻微超出，再回弹至最终位置，模拟弹簧的物理运动效果。</p>
+            <p class="use-case"><strong>典型场景</strong>点赞反馈、按钮点击、弹窗出现、菜单展开。</p>
+          </div>
+        </article>
+
+        <article class="effect-card" id="ease" data-category="feedback">
+          <button class="demo demo-ease" type="button" data-demo="ease" aria-label="演示缓出动画">
+            <span class="demo-visual" aria-hidden="true"><span class="ease-track"><b class="ease-knob"></b></span></span>
+            <span class="demo-hint" aria-hidden="true"><i></i>点击演示</span>
+          </button>
+          <div class="effect-copy">
+            <div class="effect-meta"><span>16</span><span>呈现与反馈</span></div>
+            <h3>Ease Out<span>缓出动画</span></h3>
+            <p>元素运动时先快后慢，快速进入目标位置，再自然减速停止，使动画更加流畅。</p>
+            <p class="use-case"><strong>典型场景</strong>页面进场动画、按钮交互、卡片出现、弹窗展示。</p>
+          </div>
+        </article>
+      </div>
+      <div class="empty" id="empty-results" hidden>
+        <p>没有找到匹配的动效。</p>
+        <button type="button" class="button" id="clear-filters">清空筛选</button>
+      </div>
+      <noscript><p>开启 JavaScript 即可体验演示、搜索和复制功能。</p></noscript>
+      <p id="demo-status" class="sr-only" role="status"></p>
+    </section>
+
+    <section id="principles" class="principles section" aria-labelledby="principles-title">
+      <div class="wrap">
+        <div class="section-heading"><div><h2 id="principles-title">三条动效落地原则</h2><p>让动画响应及时、运行流畅，也照顾对动态效果敏感的用户。</p></div></div>
+        <div class="principle-grid">
+          <article class="principle">
+            <div class="principle-icon timing" aria-hidden="true"></div>
+            <h3>时长控制</h3>
+            <p>按钮反馈、鼠标悬停等微交互建议控制在 <strong>100–200 毫秒</strong>。卡片进场和内容切换可随视觉复杂度适当延长。</p>
+            <p>保证快速响应，避免影响用户操作效率。</p>
+          </article>
+          <article class="principle">
+            <div class="principle-icon performance" aria-hidden="true"></div>
+            <h3>性能优化</h3>
+            <p>用 <code>transform</code> 控制位移、缩放和旋转，用 <code>opacity</code> 控制透明度和淡入淡出。</p>
+            <p>减少频繁修改 <code>width</code>、<code>height</code>、<code>top</code>、<code>left</code> 等容易触发布局计算的属性。</p>
+          </article>
+          <article class="principle">
+            <div class="principle-icon accessibility" aria-hidden="true"></div>
+            <h3>无障碍设计</h3>
+            <p>支持 <code>prefers-reduced-motion</code>。用户开启系统的「减少动态效果」后，关闭或弱化非必要动画。</p>
+            <p>本页演示也遵循这项系统设置。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="prompts" class="section prompts" aria-labelledby="prompts-title">
+      <div class="wrap">
+        <div class="section-heading"><div><h2 id="prompts-title">可直接使用的 AI 动效指令</h2><p>选一条指令，复制到你正在使用的 AI 工具中。</p></div></div>
+        <div class="prompt-grid">
+          <article class="prompt-card">
+            <div class="prompt-head"><h3><span>01</span>优化动画缓动效果</h3>
+              <button type="button" class="copy-button" aria-label="复制指令：优化动画缓动效果"><i aria-hidden="true"></i><span>复制</span></button>
+            </div>
+            <p class="prompt-text">将当前页面的动画调整为Ease Out缓动效果，让元素快速进入，再自然减速停止，避免生硬的机械运动感。</p>
+          </article>
+
+          <article class="prompt-card">
+            <div class="prompt-head"><h3><span>02</span>增加卡片交互效果</h3>
+              <button type="button" class="copy-button" aria-label="复制指令：增加卡片交互效果"><i aria-hidden="true"></i><span>复制</span></button>
+            </div>
+            <p class="prompt-text">为所有功能卡片增加Hover Lift效果。鼠标悬停时，卡片轻微上浮，阴影逐渐加深，鼠标离开后平滑恢复原位。</p>
+          </article>
+
+          <article class="prompt-card">
+            <div class="prompt-head"><h3><span>03</span>增加边框流光效果</h3>
+              <button type="button" class="copy-button" aria-label="复制指令：增加边框流光效果"><i aria-hidden="true"></i><span>复制</span></button>
+            </div>
+            <p class="prompt-text">为重点推荐卡片添加Border Beam动效，让一道科技蓝色的流光沿卡片边框循环移动，保持低调、精致，不要过度炫目。</p>
+          </article>
+
+          <article class="prompt-card">
+            <div class="prompt-head"><h3><span>04</span>增加滚动进场效果</h3>
+              <button type="button" class="copy-button" aria-label="复制指令：增加滚动进场效果"><i aria-hidden="true"></i><span>复制</span></button>
+            </div>
+            <p class="prompt-text">为页面内容添加Scroll Reveal和Stagger Animation效果。元素进入视口时依次淡入并轻微上移，相邻元素之间设置错峰延迟。</p>
+          </article>
+
+          <article class="prompt-card">
+            <div class="prompt-head"><h3><span>05</span>增加数字动态效果</h3>
+              <button type="button" class="copy-button" aria-label="复制指令：增加数字动态效果"><i aria-hidden="true"></i><span>复制</span></button>
+            </div>
+            <p class="prompt-text">为数据展示模块添加Count Up效果。当模块进入视口时，数字从0平滑递增至目标值。</p>
+          </article>
+
+          <article class="prompt-card">
+            <div class="prompt-head"><h3><span>06</span>优化整体动效体验</h3>
+              <button type="button" class="copy-button" aria-label="复制指令：优化整体动效体验"><i aria-hidden="true"></i><span>复制</span></button>
+            </div>
+            <p class="prompt-text">统一全站动画风格，微交互控制在100–200毫秒，优先使用Transform和Opacity，采用自然的Ease Out缓动。兼容Prefers Reduced Motion设置，确保动画流畅且不影响页面性能。</p>
+          </article>
+        </div>
+        <p class="sr-only" id="copy-status" role="status"></p>
+      </div>
+    </section>
+
+    <section id="references" class="wrap section references" aria-labelledby="references-title">
+      <div class="section-heading"><div><h2 id="references-title">工具与视觉风格参考</h2></div></div>
+      <div class="reference-grid">
+        <article>
+          <h3>原文提及的制作工具</h3>
+          <dl class="tools">
+            <div><dt>Fable 5.2</dt><dd>作者提及的 AI 辅助制作工具及工作流。</dd></div>
+            <div><dt>Claude 系列模型</dt><dd>用于辅助生成和调整前端效果。</dd></div>
+            <div><dt>GPT</dt><dd>可辅助开发前端动效，复杂效果可能需要多轮提示和调试。</dd></div>
+          </dl>
+        </article>
+        <article>
+          <h3>配色建议</h3>
+          <p>用黑白作为基础，搭配科技蓝，营造简洁、现代的科技感。</p>
+          <ul class="swatches" aria-label="黑、白、科技蓝色板">
+            <li><span class="swatch ink"></span>黑色</li>
+            <li><span class="swatch white"></span>白色</li>
+            <li><span class="swatch blue"></span>科技蓝</li>
+          </ul>
+        </article>
+      </div>
+      <blockquote>选对动效类型，控制好时长、缓动曲线和交互反馈，页面就能自然地呈现层次感。</blockquote>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner"><a class="brand" href="#top"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i></span>动效笔记</a><a class="back" href="#top">返回页首</a></div>
+  </footer>
+  <script>(() => {
+  "use strict";
+
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const demoStatus = document.querySelector("#demo-status");
+  const demos = [...document.querySelectorAll(".demo")];
+  const cards = [...document.querySelectorAll(".effect-card")];
+  const filters = [...document.querySelectorAll("[data-filter]")];
+  const search = document.querySelector("#effect-search");
+  const resultCount = document.querySelector("#result-count");
+  const emptyResults = document.querySelector("#empty-results");
+  let category = "all";
+
+  function updateResults() {
+    const terms = search.value.toLocaleLowerCase().trim().split(/\s+/);
+    let count = 0;
+    for (const card of cards) {
+      const text = card.querySelector(".effect-copy").textContent.toLocaleLowerCase();
+      const matches = (category === "all" || card.dataset.category === category)
+        && terms.every(term => text.includes(term));
+      card.hidden = !matches;
+      if (matches) count++;
+    }
+    resultCount.textContent = `${count} 项动效`;
+    emptyResults.hidden = count > 0;
+  }
+
+  function selectCategory(next) {
+    category = next;
+    for (const filter of filters) {
+      filter.setAttribute("aria-pressed", String(filter.dataset.filter === category));
+    }
+    updateResults();
+  }
+
+  for (const filter of filters) {
+    filter.addEventListener("click", () => selectCategory(filter.dataset.filter));
+  }
+  search.addEventListener("input", updateResults);
+  document.querySelector("#clear-filters").addEventListener("click", () => {
+    search.value = "";
+    selectCategory("all");
+    search.focus();
+  });
+  document.addEventListener("keydown", event => {
+    const editing = event.target instanceof HTMLElement
+      && (event.target.matches("input, textarea, select") || event.target.isContentEditable);
+    if (event.key === "/" && !editing && !event.altKey && !event.ctrlKey && !event.metaKey) {
+      event.preventDefault();
+      search.focus();
+    }
+  });
+
+  const animationState = new WeakMap();
+  const formats = new Intl.NumberFormat("zh-CN");
+  const durations = { spotlight: 820, reveal: 820, beam: 1960, magnetic: 680, story: 320, tilt: 800,
+    scramble: 900, shine: 820, count: 870, lift: 750, typing: 2050, stagger: 750, spring: 870, ease: 870 };
+
+  function restoreText(demo) {
+    const visual = demo.querySelector(".scramble-text, .type-text, .counter");
+    if (visual) {
+      visual.textContent = { scramble: "DECODE", typing: "Hello, UI.", count: "1,280" }[demo.dataset.demo];
+    }
+  }
+
+  function stopPlayback(demo) {
+    const state = animationState.get(demo);
+    if (state) {
+      clearTimeout(state.finish);
+      cancelAnimationFrame(state.frame);
+      animationState.delete(demo);
+    }
+    demo.classList.remove("is-playing");
+    restoreText(demo);
+  }
+
+  function animateText(demo, state, duration, draw) {
+    const start = performance.now();
+    function tick(now) {
+      const progress = Math.max(0, Math.min((now - start) / duration, 1));
+      draw(progress);
+      if (progress < 1) state.frame = requestAnimationFrame(tick);
+    }
+    state.frame = requestAnimationFrame(tick);
+  }
+
+  function runDemo(demo, direction = 1) {
+    const effect = demo.dataset.demo;
+    const reduce = reducedMotion.matches;
+    if (effect === "marquee") {
+      if (reduce) {
+        demoStatus.textContent = "已遵循系统设置，跑马灯保持静止。";
+        return;
+      }
+      demo.classList.remove("hover-paused");
+      const playing = demo.getAttribute("aria-pressed") === "true";
+      demo.setAttribute("aria-pressed", String(!playing));
+      return;
+    }
+
+    stopPlayback(demo);
+    if (effect === "story") {
+      const step = (Number(demo.dataset.step || 0) + direction + 3) % 3;
+      demo.dataset.step = step;
+      const chapter = ["品牌起点", "产品迭代", "未来愿景"][step];
+      demo.querySelector(".story-label").textContent = chapter;
+      demo.querySelector(".story-step").textContent = `0${step + 1}`;
+      [...demo.querySelectorAll(".story-dots i")].forEach((dot, index) => {
+        dot.classList.toggle("active", index === step);
+      });
+      demoStatus.textContent = `滚动叙事，第 ${step + 1} 幕，共 3 幕。${chapter}。`;
+    }
+    if (effect === "parallax") {
+      const depth = Number(demo.dataset.depth || 0);
+      const next = Math.abs(depth) === 2 ? 0 : depth + direction;
+      demo.dataset.depth = next;
+      demo.style.setProperty("--depth", next);
+    }
+    if (effect === "spring" || effect === "ease") demo.classList.add("has-played");
+    if (reduce) {
+      if (effect !== "story") demoStatus.textContent = "已遵循系统设置，展示动效静态状态。";
+      return;
+    }
+    if (effect === "parallax") return;
+
+    // Commit the inactive state so another click can restart the same CSS animation.
+    demo.getBoundingClientRect();
+    demo.classList.add("is-playing");
+    const state = {};
+    animationState.set(demo, state);
+    state.finish = setTimeout(() => stopPlayback(demo), durations[effect]);
+
+    if (effect === "scramble") {
+      const visual = demo.querySelector(".scramble-text");
+      const target = "DECODE";
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#@$%&0123456789";
+      let lastStep = -1;
+      animateText(demo, state, 690, progress => {
+        const step = Math.floor(progress * 16);
+        if (step === lastStep) return;
+        lastStep = step;
+        const complete = Math.floor(target.length * progress);
+        visual.textContent = [...target].map((letter, index) => index < complete
+          ? letter : alphabet[Math.floor(Math.random() * alphabet.length)]).join("");
+      });
+    } else if (effect === "typing") {
+      const visual = demo.querySelector(".type-text");
+      const target = "Hello, UI.";
+      visual.textContent = "";
+      animateText(demo, state, 970, progress => {
+        visual.textContent = target.slice(0, Math.floor(progress * target.length));
+      });
+    } else if (effect === "count") {
+      const visual = demo.querySelector(".counter");
+      visual.textContent = "0";
+      animateText(demo, state, 790, progress => {
+        visual.textContent = formats.format(Math.round(1280 * (1 - (1 - progress) ** 3)));
+      });
+    }
+  }
+
+  for (const demo of demos) {
+    const effect = demo.dataset.demo;
+    demo.addEventListener("click", () => runDemo(demo));
+    if (["reveal", "story", "parallax"].includes(effect)) {
+      let lastWheel = -Infinity;
+      demo.addEventListener("wheel", event => {
+        if (event.ctrlKey || !event.deltaY || performance.now() - lastWheel < 410) return;
+        lastWheel = performance.now();
+        runDemo(demo, Math.sign(event.deltaY));
+      }, { passive: true });
+    }
+    if (effect === "marquee") {
+      demo.addEventListener("pointerenter", event => {
+        if (event.pointerType === "mouse") demo.classList.add("hover-paused");
+      });
+      demo.addEventListener("pointerleave", () => demo.classList.remove("hover-paused"));
+    }
+    if (["spotlight", "magnetic", "tilt"].includes(effect)) {
+      demo.addEventListener("pointermove", event => {
+        if (reducedMotion.matches || event.pointerType === "touch") return;
+        const rect = demo.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        if (effect === "spotlight") {
+          demo.style.setProperty("--px", `${100 * x}%`);
+          demo.style.setProperty("--py", `${100 * y}%`);
+        } else if (effect === "magnetic") {
+          demo.style.setProperty("--dx", `${(x - .5) * 42}px`);
+          demo.style.setProperty("--dy", `${(y - .5) * 33}px`);
+        } else {
+          demo.style.setProperty("--ry", `${(x - .5) * 43}deg`);
+          demo.style.setProperty("--rx", `${(.5 - y) * 39}deg`);
+        }
+      });
+      demo.addEventListener("pointerleave", () => demo.removeAttribute("style"));
+    }
+  }
+
+  reducedMotion.addEventListener("change", event => {
+    if (!event.matches) return;
+    for (const demo of demos) {
+      stopPlayback(demo);
+      demo.removeAttribute("style");
+      if (demo.hasAttribute("aria-pressed")) demo.setAttribute("aria-pressed", "false");
+    }
+  });
+
+  function fallbackCopy(text, button) {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.className = "sr-only";
+    field.readOnly = true;
+    document.body.append(field);
+    field.select();
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } finally {
+      field.remove();
+      button.focus({ preventScroll: true });
+    }
+    return copied;
+  }
+
+  const copyStatus = document.querySelector("#copy-status");
+  for (const button of document.querySelectorAll(".copy-button")) {
+    const label = button.querySelector("span");
+    const source = button.closest(".prompt-card").querySelector(".prompt-text");
+    let reset;
+    button.addEventListener("click", async () => {
+      let copied = false;
+      try {
+        await navigator.clipboard.writeText(source.textContent);
+        copied = true;
+      } catch {
+        try {
+          copied = fallbackCopy(source.textContent, button);
+        } catch {
+          copied = false;
+        }
+      }
+      clearTimeout(reset);
+      button.toggleAttribute("data-copied", copied);
+      label.textContent = copied ? "已复制" : "已选中";
+      if (!copied) {
+        const range = document.createRange();
+        range.selectNodeContents(source);
+        const selection = getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+      copyStatus.textContent = copied ? "AI 动效指令已复制。" : "指令已选中，请使用浏览器的复制功能。";
+      reset = setTimeout(() => {
+        label.textContent = "复制";
+        button.removeAttribute("data-copied");
+        copyStatus.textContent = "";
+      }, 2000);
+    });
+  }
+
+  function drawCurve() {
+    const canvas = document.querySelector("#curve");
+    const width = 680;
+    const height = 430;
+    const ratio = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.scale(ratio, ratio);
+
+    function project(x, y, offset = 0) {
+      return [78 + 460 * x + 81 * y, 280 + 47 * x - 191 * y + offset];
+    }
+    function path(points, close = false) {
+      ctx.beginPath();
+      ctx.moveTo(...points[0]);
+      for (const point of points.slice(1)) ctx.lineTo(...point);
+      if (close) ctx.closePath();
+    }
+    function line(points, color, weight = 1) {
+      path(points);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = weight;
+      ctx.stroke();
+    }
+    function panel(offset, opacity) {
+      const edge = [project(0, 0, offset), project(1, 0, offset),
+        project(1, 1, offset), project(0, 1, offset)];
+      const gradient = ctx.createLinearGradient(105, 115 + offset, 455, 318 + offset);
+      gradient.addColorStop(0, `rgba(78, 95, 221, ${opacity * .32})`);
+      gradient.addColorStop(.62, `rgba(45, 67, 151, ${opacity * .19})`);
+      gradient.addColorStop(1, `rgba(90, 122, 239, ${opacity * .34})`);
+      path(edge, true);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      ctx.strokeStyle = `rgba(142, 162, 253, ${opacity * .48})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      for (let index = 1; index < 10; index++) {
+        const step = index / 10;
+        const grid = `rgba(129, 154, 248, ${opacity * .28})`;
+        line([project(step, 0, offset), project(step, 1, offset)], grid);
+        line([project(0, step, offset), project(1, step, offset)], grid);
+      }
+    }
+
+    const glow = ctx.createRadialGradient(369, 209, 10, 369, 209, 269);
+    glow.addColorStop(0, "rgba(51, 84, 234, .42)");
+    glow.addColorStop(.54, "rgba(60, 82, 206, .18)");
+    glow.addColorStop(1, "rgba(57, 78, 188, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+    for (let x = 31; x <= 650; x += 17) {
+      for (let y = 28; y < 409; y += 17) {
+        const opacity = Math.max(0, 1 - Math.hypot((x - 342) / 348, (y - 217) / 215));
+        ctx.fillStyle = `rgba(155, 174, 250, ${opacity * .31})`;
+        ctx.fillRect(x, y, 1.4, 1.4);
+      }
+    }
+
+    panel(61, .37);
+    panel(35, .48);
+    for (const [x, y] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
+      line([project(x, y, 61), project(x, y)], "#94a5ff5c");
+    }
+    panel(0, 1);
+    line([project(0, 1), project(0, 0), project(1, 0)], "#9eaefeaa", 1.2);
+    const samples = [];
+    for (let index = 0; index <= 100; index++) {
+      const t = index / 100;
+      const u = 1 - t;
+      const x = 3 * u * u * t * .22 + 3 * u * t * t * .36 + t ** 3;
+      const y = 3 * u * u * t + 3 * u * t * t + t ** 3;
+      samples.push(project(x, y));
+    }
+    path([project(0, 0), ...samples, project(1, 0)], true);
+    const area = ctx.createLinearGradient(0, 110, 0, 335);
+    area.addColorStop(0, "#7183ff69");
+    area.addColorStop(1, "#4969ff00");
+    ctx.fillStyle = area;
+    ctx.fill();
+    const stroke = ctx.createLinearGradient(90, 0, 605, 0);
+    stroke.addColorStop(0, "#6e84ff");
+    stroke.addColorStop(.47, "#ab9fff");
+    stroke.addColorStop(1, "#b8e8ff");
+    ctx.lineCap = "round";
+    ctx.shadowColor = "#667dff";
+    ctx.shadowBlur = 19;
+    line(samples, stroke, 5);
+    ctx.shadowBlur = 5;
+    line(samples, "#dce4ffb5", 1.2);
+    for (const index of [0, 19, 41, 69, 100]) {
+      const [x, y] = samples[index];
+      ctx.beginPath();
+      ctx.arc(x, y, index % 100 === 0 ? 5 : 3.2, 0, 2 * Math.PI);
+      ctx.fillStyle = "#e0eaff";
+      ctx.shadowColor = "#a7b9ff";
+      ctx.shadowBlur = 11;
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    ctx.font = '13px "Noto Sans CJK SC", system-ui, sans-serif';
+    ctx.fillStyle = "#a8b9e8";
+    ctx.fillText("进度", 124, 83);
+    ctx.fillText("时间", 263, 324);
+  }
+
+  drawCurve();
+})();
+</script>
+</body>
+</html>
